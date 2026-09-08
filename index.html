@@ -661,9 +661,6 @@
       margin-top: 2px;
     }
 
-    /* ========================================================
-       SEPARATE SKETCH ENVELOPE & ART CANVAS STYLING
-       ======================================================== */
     .sketch-envelope-wrapper {
       margin: 18px auto 12px;
       cursor: pointer;
@@ -713,7 +710,7 @@
 
     .art-frame-3d img {
       width: 100%;
-      max-height: 310px;
+      max-height: 320px;
       object-fit: contain;
       border-radius: 12px;
       display: block;
@@ -902,15 +899,12 @@
           </div>
         </div>
 
-        <!-- Button to open the Hand Drawing Envelope layer -->
         <button class="magic-btn" onclick="goScene('sceneSketchEnvelope', 90)" style="background: linear-gradient(135deg, #ffb703, #ff4d6d); margin-top: 10px;">
           One More Surprise For You 🎀✉️
         </button>
       </div>
 
-      <!-- ========================================================
-           SEPARATE LAYER: HAND-DRAWN SKETCH ENVELOPE SCENE
-           ======================================================== -->
+      <!-- SEPARATE LAYER: HAND-DRAWN SKETCH ENVELOPE SCENE -->
       <div class="step-scene" id="sceneSketchEnvelope">
         <h2>Handmade With Love 🎨</h2>
         <p class="guide">A hand-crafted memory made only for you. Tap the golden wax seal to unwrap it:</p>
@@ -938,7 +932,6 @@
   </div>
 
   <script>
-    // Asset URLs
     const photo1 = "https://i.ibb.co/p6VB4ff7/1.jpg";
     const photo2 = "https://i.ibb.co/mCgdw1jx/2.jpg";
     const photo3 = "https://i.ibb.co/gZS3z7vy/3.jpg";
@@ -946,8 +939,8 @@
     const basketImage = "https://i.ibb.co/hJwKsN3r/basket.png";
     const voiceNoteUrl = "https://files.catbox.moe/t6k6nm.m4a";
 
-    // 💡 PASTE YOUR HAND-DRAWN SKETCH LINK HERE:
-    const handDrawImage = "https://picsum.photos/id/1025/600/700";
+    // Direct image link for your hand-drawn sketch
+    const handDrawImage = "https://i.ibb.co/kgRN61bR/sketch.jpg";
 
     window.addEventListener('DOMContentLoaded', () => {
       const bImg = document.getElementById('basketImg');
@@ -968,7 +961,6 @@
       document.getElementById('wall-img-3').src = photo3;
       document.getElementById('wall-img-4').src = photo4;
 
-      // Set Hand-Drawn Sketch
       document.getElementById('handDrawImg').src = handDrawImage;
 
       const voiceEl = document.getElementById('voice-audio');
@@ -1084,7 +1076,6 @@
       }
     }
 
-    // Unwrapping the Hand-Drawn Sketch Envelope
     function unwrapHandSketch(e) {
       confetti({
         particleCount: 80,
