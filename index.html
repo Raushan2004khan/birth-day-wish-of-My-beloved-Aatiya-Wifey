@@ -17,7 +17,7 @@
       --primary: #ff4d6d;
       --primary-light: #ff758f;
       --gold: #ffb703;
-      --card-bg: rgba(26, 7, 34, 0.5);
+      --card-bg: rgba(26, 7, 34, 0.55);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,6 +43,62 @@
       height: 100vh;
       z-index: 1;
       pointer-events: none;
+    }
+
+    .balloon-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 8;
+      overflow: hidden;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      cursor: pointer;
+      pointer-events: auto;
+      user-select: none;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.4));
+      animation: riseBalloon 11s linear forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s;
+    }
+
+    .balloon:active { transform: scale(1.25); }
+
+    .balloon-body {
+      width: 48px;
+      height: 60px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      background: radial-gradient(circle at 35% 30%, #ffccd5, #ff4d6d);
+      box-shadow: inset -4px -6px 12px rgba(0,0,0,0.25);
+    }
+
+    .balloon-knot {
+      width: 8px;
+      height: 6px;
+      background: #c9184a;
+      border-radius: 2px;
+      margin-top: -2px;
+    }
+
+    .balloon-string {
+      width: 1.5px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    @keyframes riseBalloon {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.95; }
+      90% { opacity: 0.95; }
+      100% { transform: translateY(-115vh) rotate(15deg); opacity: 0; }
     }
 
     .viewport-3d {
@@ -122,17 +178,6 @@
       25% { transform: translateY(-5px) rotateZ(-4deg) rotateY(-8deg) scale(1.03); }
       50% { transform: translateY(0) rotateZ(0deg) rotateY(0deg); }
       75% { transform: translateY(-5px) rotateZ(4deg) rotateY(8deg) scale(1.03); }
-    }
-
-    .chibi-bounce {
-      animation: playfulJump3D 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-    }
-
-    @keyframes playfulJump3D {
-      0% { transform: scale(1) translateZ(0); }
-      40% { transform: translateY(-18px) scale(1.12) translateZ(40px) rotateZ(-4deg); }
-      70% { transform: translateY(3px) scale(0.96) translateZ(10px); }
-      100% { transform: translateY(0) scale(1) translateZ(0); }
     }
 
     .chibi-bubble {
@@ -403,6 +448,107 @@
       filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
     }
 
+    .envelope-box {
+      margin: 20px auto 14px;
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      display: inline-block;
+      position: relative;
+    }
+
+    .envelope-icon {
+      font-size: 5rem;
+      line-height: 1;
+      filter: drop-shadow(0 12px 24px rgba(255, 77, 109, 0.45));
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: pulseEnvelope 2.4s infinite ease-in-out;
+    }
+
+    .envelope-box:active .envelope-icon {
+      transform: scale(0.92) rotate(-5deg);
+    }
+
+    @keyframes pulseEnvelope {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.08) translateY(-6px); }
+    }
+
+    .tap-counter-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 117, 143, 0.4);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      color: #ffccd5;
+      margin-top: 6px;
+    }
+
+    .magical-word {
+      position: fixed;
+      font-family: 'Caveat', cursive;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #ff4d6d;
+      text-shadow: 0 0 20px #ffccd5, 0 0 35px #ff4d6d;
+      pointer-events: none;
+      z-index: 1000;
+      animation: flyWord 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes flyWord {
+      0% { transform: translate(-50%, -50%) scale(0.3) rotate(-15deg); opacity: 0; }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.3) rotate(6deg); }
+      70% { opacity: 1; transform: translate(-50%, -100px) scale(1.1) rotate(-4deg); }
+      100% { opacity: 0; transform: translate(-50%, -160px) scale(0.9); }
+    }
+
+    .voice-note-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 117, 143, 0.35);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin: 10px auto 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      transform: translateZ(30px);
+    }
+
+    .voice-play-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      border: none;
+      color: #fff;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.5);
+      flex-shrink: 0;
+    }
+
+    .voice-info {
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .voice-info-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .voice-info-sub {
+      font-size: 0.72rem;
+      color: #ffccd5;
+    }
+
     .carousel-3d-wrap {
       perspective: 900px;
       width: 100%;
@@ -536,10 +682,17 @@
 </head>
 <body>
 
+  <div class="balloon-layer" id="balloonLayer"></div>
+
   <canvas id="webgl-bg"></canvas>
 
   <audio id="romantic-audio" loop preload="auto">
     <source src="https://files.catbox.moe/kzguzq.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Voice Note Audio -->
+  <audio id="voice-audio" preload="auto">
+    <source src="https://files.catbox.moe/t6k6nm.m4a" type="audio/mp4">
   </audio>
 
   <button class="bgm-tag" onclick="toggleMusic()">
@@ -563,6 +716,7 @@
         />
       </div>
 
+      <!-- SCENE 1 -->
       <div class="step-scene active" id="scene1">
         <h2>Private Celebration ✨</h2>
         <p class="guide">This portal is strictly private. Enter the passcode to enter:</p>
@@ -571,6 +725,7 @@
         <button class="magic-btn" onclick="checkGate()">Unlock Magic 🪄</button>
       </div>
 
+      <!-- SCENE 2 -->
       <div class="step-scene" id="scene2">
         <h2>Fill the Magic Basket 🧺</h2>
         <p class="guide">Catch <b>Heart</b>, <b>Tara</b>, <b>Tulip</b>, and <b>Rose</b> to unlock memories!</p>
@@ -604,6 +759,7 @@
         <p style="font-size: 0.76rem; color: #ffccd5; transform: translateZ(20px);">Slide Aatiya's basket left and right 👆</p>
       </div>
 
+      <!-- SCENE 3 -->
       <div class="step-scene" id="scene3">
         <h2>Make A Wish, Aatiya 🎂</h2>
         <p class="guide">Think of your sweetest wish for this year, then <b>tap the candle flame</b> to blow it out!</p>
@@ -616,8 +772,29 @@
         <p id="cakeHint" style="font-size: 0.78rem; color: #ffccd5; margin-top: 4px; transform: translateZ(20px);">Tap the flickering flame 👆</p>
       </div>
 
+      <!-- INTERMEDIATE SCENE: 3-Tap Magic Envelope -->
+      <div class="step-scene" id="sceneEnvelope">
+        <h2>A Secret Letter Arrived 💌</h2>
+        <p class="guide">A secret message sealed for Raj-Rani saheba. Tap the envelope <b>3 times</b> to unlock:</p>
+        
+        <div class="envelope-box" onclick="handleEnvelopeTap(event)">
+          <div class="envelope-icon" id="envelopeIcon">💌</div>
+          <div class="tap-counter-badge" id="tapBadge">Taps remaining: 3 💕</div>
+        </div>
+      </div>
+
+      <!-- SCENE 4 -->
       <div class="step-scene" id="scene4">
         <h2>Happy Birthday, Aatiya mine queen of heart Raj-Rani saheba 👑❤️</h2>
+
+        <!-- Voice Note Player Card -->
+        <div class="voice-note-card">
+          <button class="voice-play-btn" id="voicePlayBtn" onclick="toggleVoiceNote()">▶</button>
+          <div class="voice-info">
+            <div class="voice-info-title">Special Voice Message 🎙️</div>
+            <div class="voice-info-sub" id="voiceStatus">Tap to hear my birthday voice for you</div>
+          </div>
+        </div>
         
         <div class="carousel-3d-wrap" onclick="rotateCarousel()">
           <div class="carousel-frame c4-pos-0" id="cframe-0">
@@ -673,6 +850,9 @@
     const photo4 = "https://i.ibb.co/LdNmxTT9/4.jpg";
     const basketImage = "https://i.ibb.co/hJwKsN3r/basket.png";
 
+    // Direct Voice Wishes M4A Link
+    const voiceNoteUrl = "https://files.catbox.moe/t6k6nm.m4a";
+
     window.addEventListener('DOMContentLoaded', () => {
       const bImg = document.getElementById('basketImg');
       if (bImg) bImg.src = basketImage;
@@ -692,14 +872,155 @@
       document.getElementById('wall-img-3').src = photo3;
       document.getElementById('wall-img-4').src = photo4;
 
-      // Enable Enter key on passcode input
+      const voiceEl = document.getElementById('voice-audio');
+      if (voiceEl) voiceEl.src = voiceNoteUrl;
+
       const passField = document.getElementById('passInput');
       if (passField) {
         passField.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') checkGate();
         });
       }
+
+      startBalloonSpawner();
     });
+
+    const balloonCompliments = [
+      "You are gorgeous! ✨",
+      "My Rani saheba 👑",
+      "Cutest smile ever 🌸",
+      "Precious gem 💕",
+      "Forever mine 🤍",
+      "Happy Birthday Aatiya! 🎂"
+    ];
+
+    const balloonColors = [
+      ['#ffccd5', '#ff4d6d'],
+      ['#ffe5ec', '#ff758f'],
+      ['#fff0f3', '#ffb703'],
+      ['#e0aaff', '#7b2cbf'],
+      ['#ffccd5', '#c9184a']
+    ];
+
+    function startBalloonSpawner() {
+      const layer = document.getElementById('balloonLayer');
+      setInterval(() => {
+        if (document.hidden) return;
+        const b = document.createElement('div');
+        b.className = 'balloon';
+
+        const colorPair = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        const leftPercent = Math.random() * 84 + 8;
+        b.style.left = leftPercent + 'vw';
+        b.style.animationDuration = (Math.random() * 4 + 9) + 's';
+
+        b.innerHTML = `
+          <div class="balloon-body" style="background: radial-gradient(circle at 35% 30%, ${colorPair[0]}, ${colorPair[1]});"></div>
+          <div class="balloon-knot" style="background: ${colorPair[1]};"></div>
+          <div class="balloon-string"></div>
+        `;
+
+        b.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const rect = b.getBoundingClientRect();
+          confetti({
+            particleCount: 22,
+            spread: 50,
+            origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight }
+          });
+
+          const bubble = document.getElementById('chibi-text');
+          if (bubble) bubble.textContent = balloonCompliments[Math.floor(Math.random() * balloonCompliments.length)];
+
+          b.remove();
+        });
+
+        layer.appendChild(b);
+
+        setTimeout(() => { if (b.parentNode) b.remove(); }, 14000);
+      }, 3400);
+    }
+
+    let envelopeTaps = 0;
+    const magicWords = ["I", "LOVE", "YOU"];
+
+    function handleEnvelopeTap(e) {
+      if (envelopeTaps >= 3) return;
+
+      const word = magicWords[envelopeTaps];
+      envelopeTaps++;
+
+      const wordEl = document.createElement('div');
+      wordEl.className = 'magical-word';
+      wordEl.textContent = word + " ✨";
+      wordEl.style.left = e.clientX + 'px';
+      wordEl.style.top = e.clientY + 'px';
+      document.body.appendChild(wordEl);
+
+      setTimeout(() => wordEl.remove(), 1600);
+
+      confetti({
+        particleCount: 30,
+        spread: 55,
+        origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }
+      });
+
+      const badge = document.getElementById('tapBadge');
+      const icon = document.getElementById('envelopeIcon');
+
+      if (envelopeTaps === 1) {
+        badge.textContent = "Tap again: 2 💕";
+        icon.textContent = "💌";
+      } else if (envelopeTaps === 2) {
+        badge.textContent = "One more tap: 1 💕";
+        icon.textContent = "💖";
+      } else if (envelopeTaps === 3) {
+        badge.textContent = "Unlocked with pure love! ✨";
+        icon.textContent = "📖";
+        confetti({ particleCount: 90, spread: 80, origin: { y: 0.5 } });
+
+        setTimeout(() => {
+          goScene(4, 100);
+          typeLoveLetter();
+        }, 850);
+      }
+    }
+
+    let isVoicePlaying = false;
+
+    function toggleVoiceNote() {
+      const voice = document.getElementById('voice-audio');
+      const bgm = document.getElementById('romantic-audio');
+      const btn = document.getElementById('voicePlayBtn');
+      const status = document.getElementById('voiceStatus');
+
+      if (!voice) return;
+
+      if (!isVoicePlaying) {
+        if (bgm && !bgm.paused) bgm.volume = 0.2;
+
+        voice.play().then(() => {
+          isVoicePlaying = true;
+          btn.textContent = "⏸";
+          status.textContent = "Playing your voice message... ❤️";
+        }).catch(() => {
+          status.textContent = "Unable to play audio. Tap again!";
+        });
+
+        voice.onended = () => {
+          isVoicePlaying = false;
+          btn.textContent = "▶";
+          status.textContent = "Message finished. Tap to listen again 💕";
+          if (bgm && !bgm.paused) bgm.volume = 1.0;
+        };
+      } else {
+        voice.pause();
+        isVoicePlaying = false;
+        btn.textContent = "▶";
+        status.textContent = "Paused. Tap to continue";
+        if (bgm && !bgm.paused) bgm.volume = 1.0;
+      }
+    }
 
     let carouselStep = 0;
     function rotateCarousel() {
@@ -864,13 +1185,14 @@
 
     function goScene(sceneIndex, pct) {
       document.querySelectorAll('.step-scene').forEach(s => s.classList.remove('active'));
-      const targetScene = document.getElementById('scene' + sceneIndex);
+      const targetScene = (typeof sceneIndex === 'string') 
+        ? document.getElementById(sceneIndex) 
+        : document.getElementById('scene' + sceneIndex);
       if (targetScene) targetScene.classList.add('active');
       const fill = document.getElementById('p-fill');
       if (fill) fill.style.width = pct + '%';
     }
 
-    // STRICT PASSWORD VERIFICATION (Public Link Access Lock)
     function checkGate() {
       ensureAudioPlays();
       const input = document.getElementById('passInput');
@@ -879,8 +1201,6 @@
       if (!input) return;
 
       const val = input.value.trim().toLowerCase();
-      
-      // Strict: Only "aatiya" unlocks the portal
       if (val === 'aatiya') {
         if (err) err.textContent = "";
         if (bubble) bubble.textContent = "Welcome, Raj-Rani saheba! 👑";
@@ -995,13 +1315,12 @@
       if (bubble) bubble.textContent = "Happy Birthday! 🥳";
 
       const hint = document.getElementById('cakeHint');
-      if (hint) hint.textContent = "Wish made! Opening your love letter... ✨";
+      if (hint) hint.textContent = "Wish made! Delivering secret letter... ✨";
 
       fireworkShow();
 
       setTimeout(() => {
-        goScene(4, 100);
-        typeLoveLetter();
+        goScene('sceneEnvelope', 90);
       }, 900);
     }
 
