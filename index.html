@@ -147,7 +147,7 @@
 
     .progress-fill {
       height: 100%;
-      width: 25%;
+      width: 20%;
       background: linear-gradient(90deg, #ff4d6d, #ffb703);
       border-radius: 20px;
       transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -661,6 +661,74 @@
       margin-top: 2px;
     }
 
+    /* ========================================================
+       SEPARATE SKETCH ENVELOPE & ART CANVAS STYLING
+       ======================================================== */
+    .sketch-envelope-wrapper {
+      margin: 18px auto 12px;
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      display: inline-block;
+      position: relative;
+    }
+
+    .sketch-wax-seal {
+      position: relative;
+      font-size: 5.4rem;
+      line-height: 1;
+      filter: drop-shadow(0 14px 28px rgba(255, 183, 3, 0.45));
+      animation: gentleFloat 2.6s infinite ease-in-out alternate;
+      transition: transform 0.25s;
+    }
+
+    .sketch-envelope-wrapper:active .sketch-wax-seal {
+      transform: scale(0.92);
+    }
+
+    @keyframes gentleFloat {
+      0% { transform: translateY(0) rotate(-3deg); }
+      100% { transform: translateY(-8px) rotate(3deg); }
+    }
+
+    .art-frame-3d {
+      background: linear-gradient(135deg, #fffdf8, #fff1f3);
+      border: 6px solid #fff;
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.65), 
+        0 0 25px rgba(255, 77, 109, 0.35),
+        inset 0 0 10px rgba(0,0,0,0.08);
+      margin: 12px auto 14px;
+      transform: translateZ(40px);
+      max-width: 320px;
+      animation: popArt 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popArt {
+      from { transform: scale(0.7) rotate(-6deg) translateZ(-30px); opacity: 0; }
+      to { transform: scale(1) rotate(0deg) translateZ(40px); opacity: 1; }
+    }
+
+    .art-frame-3d img {
+      width: 100%;
+      max-height: 310px;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      background: #1a041f;
+    }
+
+    .art-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.18rem;
+      color: #4a0418;
+      font-weight: 700;
+      margin-top: 8px;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+    }
+
     .bgm-tag {
       position: fixed;
       top: 14px;
@@ -683,14 +751,12 @@
 <body>
 
   <div class="balloon-layer" id="balloonLayer"></div>
-
   <canvas id="webgl-bg"></canvas>
 
   <audio id="romantic-audio" loop preload="auto">
     <source src="https://files.catbox.moe/kzguzq.mp3" type="audio/mp3">
   </audio>
 
-  <!-- Voice Note Audio -->
   <audio id="voice-audio" preload="auto">
     <source src="https://files.catbox.moe/t6k6nm.m4a" type="audio/mp4">
   </audio>
@@ -716,7 +782,7 @@
         />
       </div>
 
-      <!-- SCENE 1 -->
+      <!-- SCENE 1: Strict Public Password Gate -->
       <div class="step-scene active" id="scene1">
         <h2>Private Celebration ✨</h2>
         <p class="guide">This portal is strictly private. Enter the passcode to enter:</p>
@@ -725,7 +791,7 @@
         <button class="magic-btn" onclick="checkGate()">Unlock Magic 🪄</button>
       </div>
 
-      <!-- SCENE 2 -->
+      <!-- SCENE 2: Minigame with 4 Photos -->
       <div class="step-scene" id="scene2">
         <h2>Fill the Magic Basket 🧺</h2>
         <p class="guide">Catch <b>Heart</b>, <b>Tara</b>, <b>Tulip</b>, and <b>Rose</b> to unlock memories!</p>
@@ -759,7 +825,7 @@
         <p style="font-size: 0.76rem; color: #ffccd5; transform: translateZ(20px);">Slide Aatiya's basket left and right 👆</p>
       </div>
 
-      <!-- SCENE 3 -->
+      <!-- SCENE 3: Make A Wish Cake -->
       <div class="step-scene" id="scene3">
         <h2>Make A Wish, Aatiya 🎂</h2>
         <p class="guide">Think of your sweetest wish for this year, then <b>tap the candle flame</b> to blow it out!</p>
@@ -783,11 +849,10 @@
         </div>
       </div>
 
-      <!-- SCENE 4 -->
+      <!-- SCENE 4: Full Wishes with Voice Note + Carousel + Letter + Polaroid Wall -->
       <div class="step-scene" id="scene4">
         <h2>Happy Birthday, Aatiya mine queen of heart Raj-Rani saheba 👑❤️</h2>
 
-        <!-- Voice Note Player Card -->
         <div class="voice-note-card">
           <button class="voice-play-btn" id="voicePlayBtn" onclick="toggleVoiceNote()">▶</button>
           <div class="voice-info">
@@ -837,6 +902,35 @@
           </div>
         </div>
 
+        <!-- Button to open the Hand Drawing Envelope layer -->
+        <button class="magic-btn" onclick="goScene('sceneSketchEnvelope', 90)" style="background: linear-gradient(135deg, #ffb703, #ff4d6d); margin-top: 10px;">
+          One More Surprise For You 🎀✉️
+        </button>
+      </div>
+
+      <!-- ========================================================
+           SEPARATE LAYER: HAND-DRAWN SKETCH ENVELOPE SCENE
+           ======================================================== -->
+      <div class="step-scene" id="sceneSketchEnvelope">
+        <h2>Handmade With Love 🎨</h2>
+        <p class="guide">A hand-crafted memory made only for you. Tap the golden wax seal to unwrap it:</p>
+
+        <div class="sketch-envelope-wrapper" onclick="unwrapHandSketch(event)">
+          <div class="sketch-wax-seal" id="sketchSealIcon">🏷️💌</div>
+          <div class="tap-counter-badge">Tap to break the seal ✨</div>
+        </div>
+      </div>
+
+      <!-- FINAL REVEAL: HAND-DRAWN SKETCH ART GALLERY -->
+      <div class="step-scene" id="sceneSketchReveal">
+        <h2>My Sketch For You, Aatiya 🎨❤️</h2>
+        <p class="guide">Crafted stroke by stroke for my beloved queen:</p>
+
+        <div class="art-frame-3d">
+          <img id="handDrawImg" src="" alt="Handmade Sketch of Aatiya">
+          <div class="art-caption">"Every stroke carries my heart for you." ✍️🌸</div>
+        </div>
+
         <button class="magic-btn" onclick="burstLoveConfetti()">Send Infinite Hugs 🌸</button>
       </div>
 
@@ -844,14 +938,16 @@
   </div>
 
   <script>
+    // Asset URLs
     const photo1 = "https://i.ibb.co/p6VB4ff7/1.jpg";
     const photo2 = "https://i.ibb.co/mCgdw1jx/2.jpg";
     const photo3 = "https://i.ibb.co/gZS3z7vy/3.jpg";
     const photo4 = "https://i.ibb.co/LdNmxTT9/4.jpg";
     const basketImage = "https://i.ibb.co/hJwKsN3r/basket.png";
-
-    // Direct Voice Wishes M4A Link
     const voiceNoteUrl = "https://files.catbox.moe/t6k6nm.m4a";
+
+    // 💡 PASTE YOUR HAND-DRAWN SKETCH LINK HERE:
+    const handDrawImage = "https://picsum.photos/id/1025/600/700";
 
     window.addEventListener('DOMContentLoaded', () => {
       const bImg = document.getElementById('basketImg');
@@ -871,6 +967,9 @@
       document.getElementById('wall-img-2').src = photo2;
       document.getElementById('wall-img-3').src = photo3;
       document.getElementById('wall-img-4').src = photo4;
+
+      // Set Hand-Drawn Sketch
+      document.getElementById('handDrawImg').src = handDrawImage;
 
       const voiceEl = document.getElementById('voice-audio');
       if (voiceEl) voiceEl.src = voiceNoteUrl;
@@ -936,7 +1035,6 @@
         });
 
         layer.appendChild(b);
-
         setTimeout(() => { if (b.parentNode) b.remove(); }, 14000);
       }, 3400);
     }
@@ -980,10 +1078,30 @@
         confetti({ particleCount: 90, spread: 80, origin: { y: 0.5 } });
 
         setTimeout(() => {
-          goScene(4, 100);
+          goScene(4, 75);
           typeLoveLetter();
         }, 850);
       }
+    }
+
+    // Unwrapping the Hand-Drawn Sketch Envelope
+    function unwrapHandSketch(e) {
+      confetti({
+        particleCount: 80,
+        spread: 75,
+        origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }
+      });
+
+      const seal = document.getElementById('sketchSealIcon');
+      if (seal) seal.textContent = "✨🖼️";
+
+      const bubble = document.getElementById('chibi-text');
+      if (bubble) bubble.textContent = "My hand-drawn gift for you! 🎨";
+
+      setTimeout(() => {
+        goScene('sceneSketchReveal', 100);
+        confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
+      }, 700);
     }
 
     let isVoicePlaying = false;
@@ -1205,7 +1323,7 @@
         if (err) err.textContent = "";
         if (bubble) bubble.textContent = "Welcome, Raj-Rani saheba! 👑";
         confetti({ particleCount: 45, spread: 65, origin: { y: 0.65 } });
-        goScene(2, 50);
+        goScene(2, 40);
         startFallingGame();
       } else {
         if (err) err.textContent = "Access Denied: Incorrect passcode 🔒";
@@ -1301,7 +1419,7 @@
           clearInterval(spawnInterval);
           if (bubble) bubble.textContent = "Make a wish! 🎂";
           confetti({ particleCount: 80, spread: 65, origin: { y: 0.55 } });
-          setTimeout(() => goScene(3, 75), 800);
+          setTimeout(() => goScene(3, 55), 800);
         }
       }
     }
@@ -1320,7 +1438,7 @@
       fireworkShow();
 
       setTimeout(() => {
-        goScene('sceneEnvelope', 90);
+        goScene('sceneEnvelope', 65);
       }, 900);
     }
 
